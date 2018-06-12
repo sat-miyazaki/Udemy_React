@@ -10,7 +10,7 @@ class Header extends React.Component {
 class Footer extends React.Component {
   render() {
     return (
-      <footer className="footer">&copy;2018 Aire Project</footer>
+      <footer className="footer">&copy; 2018 Aire Project</footer>
     )
   }
 }
