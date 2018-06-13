@@ -20439,10 +20439,31 @@ var MainArea = function (_React$Component) {
   _createClass(MainArea, [{
     key: 'render',
     value: function render() {
+      var todos = [{ label: "Todo1" }, { label: "Todo2" }, { label: "Todo3" }, { label: "Todo4" }];
+
+      var todoItemDom = [];
+      for (var i = 0; i < todos.length; i++) {
+        var todoItem = _react2.default.createElement(
+          'li',
+          { className: 'todo-list-item', key: "item-" + i },
+          todos[i].label
+        );
+        todoItemDom.push(todoItem);
+      }
+
       return _react2.default.createElement(
         'div',
         { className: 'main-area' },
         _react2.default.createElement(_header2.default, null),
+        _react2.default.createElement(
+          'main',
+          { className: 'list-area' },
+          _react2.default.createElement(
+            'ul',
+            { className: 'todo-list' },
+            todoItemDom
+          )
+        ),
         _react2.default.createElement(_footer2.default, null)
       );
     }
