@@ -20430,27 +20430,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MainArea = function (_React$Component) {
   _inherits(MainArea, _React$Component);
 
-  function MainArea() {
+  function MainArea(props) {
     _classCallCheck(this, MainArea);
 
-    return _possibleConstructorReturn(this, (MainArea.__proto__ || Object.getPrototypeOf(MainArea)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (MainArea.__proto__ || Object.getPrototypeOf(MainArea)).call(this, props));
+
+    _this.state = {
+      todos: [{ label: "Todo1" }, { label: "Todo2" }]
+    };
+    return _this;
   }
 
   _createClass(MainArea, [{
-    key: 'render',
-    value: function render() {
-      var todos = [{ label: "Todo1" }, { label: "Todo2" }, { label: "Todo3" }, { label: "Todo4" }];
-
+    key: 'renderTodoItems',
+    value: function renderTodoItems() {
       var todoItemDom = [];
-      for (var i = 0; i < todos.length; i++) {
+      for (var i = 0; i < this.state.todos.length; i++) {
         var todoItem = _react2.default.createElement(
           'li',
           { className: 'todo-list-item', key: "item-" + i },
-          todos[i].label
+          this.state.todos[i].label
         );
         todoItemDom.push(todoItem);
       }
-
+      return todoItemDom;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'main-area' },
@@ -20461,7 +20468,7 @@ var MainArea = function (_React$Component) {
           _react2.default.createElement(
             'ul',
             { className: 'todo-list' },
-            todoItemDom
+            this.renderTodoItems()
           )
         ),
         _react2.default.createElement(_footer2.default, null)
