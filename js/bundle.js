@@ -20436,12 +20436,30 @@ var MainArea = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MainArea.__proto__ || Object.getPrototypeOf(MainArea)).call(this, props));
 
     _this.state = {
-      todos: [{ label: "Todo1" }, { label: "Todo2" }]
+      todos: [{ label: "Todo1" }, { label: "Todo2" }],
+      todoInputValue: ""
     };
     return _this;
   }
 
   _createClass(MainArea, [{
+    key: 'onChangeTodoInput',
+    value: function onChangeTodoInput(event) {
+      this.setState({ todoInputValue: event.target.value });
+    }
+  }, {
+    key: 'onClickAddButton',
+    value: function onClickAddButton(event) {
+      var addItem = { label: this.state.todoInputValue };
+      var todos = this.state.todos.slice();
+      todos.push(addItem);
+
+      this.setState({
+        todos: todos,
+        todoInputValue: ""
+      });
+    }
+  }, {
     key: 'renderTodoItems',
     value: function renderTodoItems() {
       var todoItemDom = [];
@@ -20465,6 +20483,21 @@ var MainArea = function (_React$Component) {
         _react2.default.createElement(
           'main',
           { className: 'list-area' },
+          _react2.default.createElement(
+            'div',
+            { className: 'todo-input-area' },
+            _react2.default.createElement('input', { type: 'text',
+              className: 'todo-input',
+              placeholder: 'Todo\u3092\u8FFD\u52A0',
+              value: this.state.todoInputValue,
+              onChange: this.onChangeTodoInput.bind(this) }),
+            _react2.default.createElement(
+              'button',
+              { className: 'add-button',
+                onClick: this.onClickAddButton.bind(this) },
+              '\u767B\u9332'
+            )
+          ),
           _react2.default.createElement(
             'ul',
             { className: 'todo-list' },
