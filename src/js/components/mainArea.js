@@ -9,8 +9,16 @@ export default class MainArea extends React.Component {
 
     this.state = {
       todos: [
-        {label:"Todo1"},
-        {label:"Todo2"},
+        {
+          id:"item-1",
+          label:"Todo1",
+          completed: false
+        },
+        {
+          id:"item-2",
+          label:"Todo2",
+          completed: false
+        },
       ],
       todoInputValue: ""
     }
@@ -31,14 +39,29 @@ export default class MainArea extends React.Component {
     });
   }
 
+  onCompleteTodo(id) {
+    let _state = Object.assign({}, this.state);
+    for (var i = 0; i < _state.todos.length; i++) {
+      if (_state.todos[i].id == id) {
+        _state.todos[i].completed = true;
+        break;
+      }
+    }
+
+    this.setState(_state);
+  }
+
   renderTodoItems() {
     let todoItemDom = [];
     for (var i = 0; i < this.state.todos.length; i++) {
-      let todoItem = <ListItem
-                        key={"item-"+i}
-                        data={this.state.todos[i]}
-                     />;
-      todoItemDom.push(todoItem);
+      if (!this.state.todos[i].completed) {
+        let todoItem = <ListItem
+          key={"item-"+i}
+          data={this.state.todos[i]}
+          completeTodo={this.onCompleteTodo.bind(this)}
+        />;
+        todoItemDom.push(todoItem);
+      }
     }
     return todoItemDom;
   }

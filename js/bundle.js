@@ -20440,7 +20440,15 @@ var MainArea = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MainArea.__proto__ || Object.getPrototypeOf(MainArea)).call(this, props));
 
     _this.state = {
-      todos: [{ label: "Todo1" }, { label: "Todo2" }],
+      todos: [{
+        id: "item-1",
+        label: "Todo1",
+        completed: false
+      }, {
+        id: "item-2",
+        label: "Todo2",
+        completed: false
+      }],
       todoInputValue: ""
     };
     return _this;
@@ -20464,15 +20472,31 @@ var MainArea = function (_React$Component) {
       });
     }
   }, {
+    key: 'onCompleteTodo',
+    value: function onCompleteTodo(id) {
+      var _state = Object.assign({}, this.state);
+      for (var i = 0; i < _state.todos.length; i++) {
+        if (_state.todos[i].id == id) {
+          _state.todos[i].completed = true;
+          break;
+        }
+      }
+
+      this.setState(_state);
+    }
+  }, {
     key: 'renderTodoItems',
     value: function renderTodoItems() {
       var todoItemDom = [];
       for (var i = 0; i < this.state.todos.length; i++) {
-        var todoItem = _react2.default.createElement(_listItem2.default, {
-          key: "item-" + i,
-          data: this.state.todos[i]
-        });
-        todoItemDom.push(todoItem);
+        if (!this.state.todos[i].completed) {
+          var todoItem = _react2.default.createElement(_listItem2.default, {
+            key: "item-" + i,
+            data: this.state.todos[i],
+            completeTodo: this.onCompleteTodo.bind(this)
+          });
+          todoItemDom.push(todoItem);
+        }
       }
       return todoItemDom;
     }
@@ -20652,11 +20676,19 @@ var ListItem = function (_React$Component) {
   }
 
   _createClass(ListItem, [{
+    key: "onChangeCheckBox",
+    value: function onChangeCheckBox(event) {
+      this.props.completeTodo(event.target.value);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
         "li",
         { className: "todo-list-item" },
+        _react2.default.createElement("input", { type: "checkbox",
+          value: this.props.data.id,
+          onChange: this.onChangeCheckBox.bind(this) }),
         this.props.data.label
       );
     }
