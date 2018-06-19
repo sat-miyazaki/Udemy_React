@@ -20485,6 +20485,19 @@ var MainArea = function (_React$Component) {
       this.setState(_state);
     }
   }, {
+    key: 'onDeleteTodo',
+    value: function onDeleteTodo(id) {
+      var _state = Object.assign({}, this.state);
+      for (var i = 0; i < _state.todos.length; i++) {
+        if (_state.todos[i].id == id) {
+          _state.todos.splice(i, 1);
+          break;
+        }
+      }
+
+      this.setState(_state);
+    }
+  }, {
     key: 'renderTodoItems',
     value: function renderTodoItems() {
       var todoItemDom = [];
@@ -20493,7 +20506,8 @@ var MainArea = function (_React$Component) {
           var todoItem = _react2.default.createElement(_listItem2.default, {
             key: "item-" + i,
             data: this.state.todos[i],
-            completeTodo: this.onCompleteTodo.bind(this)
+            completeTodo: this.onCompleteTodo.bind(this),
+            deleteTodo: this.onDeleteTodo.bind(this)
           });
           todoItemDom.push(todoItem);
         }
@@ -20681,6 +20695,11 @@ var ListItem = function (_React$Component) {
       this.props.completeTodo(event.target.value);
     }
   }, {
+    key: "onClickDeleteButton",
+    value: function onClickDeleteButton(event) {
+      this.props.deleteTodo(this.props.data.id);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
@@ -20689,7 +20708,14 @@ var ListItem = function (_React$Component) {
         _react2.default.createElement("input", { type: "checkbox",
           value: this.props.data.id,
           onChange: this.onChangeCheckBox.bind(this) }),
-        this.props.data.label
+        this.props.data.label,
+        _react2.default.createElement(
+          "button",
+          {
+            className: "delete-button",
+            onClick: this.onClickDeleteButton.bind(this) },
+          "\xD7"
+        )
       );
     }
   }]);

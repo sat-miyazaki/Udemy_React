@@ -51,6 +51,18 @@ export default class MainArea extends React.Component {
     this.setState(_state);
   }
 
+  onDeleteTodo(id) {
+    let _state = Object.assign({}, this.state);
+    for (var i = 0; i < _state.todos.length; i++) {
+      if (_state.todos[i].id == id) {
+        _state.todos.splice(i, 1);
+        break;
+      }
+    }
+
+    this.setState(_state);
+  }
+
   renderTodoItems() {
     let todoItemDom = [];
     for (var i = 0; i < this.state.todos.length; i++) {
@@ -59,6 +71,7 @@ export default class MainArea extends React.Component {
           key={"item-"+i}
           data={this.state.todos[i]}
           completeTodo={this.onCompleteTodo.bind(this)}
+          deleteTodo={this.onDeleteTodo.bind(this)}
         />;
         todoItemDom.push(todoItem);
       }
