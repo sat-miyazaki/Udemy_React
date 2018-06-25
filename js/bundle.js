@@ -20376,16 +20376,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SideArea = function (_React$Component) {
   _inherits(SideArea, _React$Component);
 
-  function SideArea() {
+  function SideArea(props) {
     _classCallCheck(this, SideArea);
 
-    return _possibleConstructorReturn(this, (SideArea.__proto__ || Object.getPrototypeOf(SideArea)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (SideArea.__proto__ || Object.getPrototypeOf(SideArea)).call(this, props));
+
+    _this.state = {
+      groupList: [{
+        id: "inbox",
+        label: "受信箱"
+      }, {
+        id: "group-1",
+        label: "グループ1"
+      }]
+    };
+    return _this;
   }
 
   _createClass(SideArea, [{
+    key: "renderGroup",
+    value: function renderGroup() {
+      var groupListDom = [];
+      for (var i = 0; i < this.state.groupList.length; i++) {
+        var group = this.state.groupList[i];
+        var groupItem = _react2.default.createElement(
+          "li",
+          { key: group.id },
+          group.label
+        );
+        groupListDom.push(groupItem);
+      }
+      return groupListDom;
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react2.default.createElement("div", { className: "side-area" });
+      return _react2.default.createElement(
+        "div",
+        { className: "side-area" },
+        _react2.default.createElement(
+          "ul",
+          { className: "group-list" },
+          this.renderGroup()
+        )
+      );
     }
   }]);
 
