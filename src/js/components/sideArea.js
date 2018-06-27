@@ -3,26 +3,20 @@ import React from 'react';
 export default class SideArea extends React.Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {
-      groupList: [
-        {
-          id: "inbox",
-          label: "受信箱"
-        },
-        {
-          id: "group-1",
-          label: "グループ1"
-        }
-      ]
-    }
+  onClickGroup(id) {
+    this.props.onSelect(id);
   }
 
   renderGroup() {
     let groupListDom = [];
-    for (var i = 0; i < this.state.groupList.length; i++) {
-      let group = this.state.groupList[i];
-      let groupItem = <li key={group.id}>{group.label}</li>;
+    for (var i = 0; i < this.props.groupList.length; i++) {
+      let group = this.props.groupList[i];
+      let groupItem = (<li key={group.id}
+                           onClick={() => {this.onClickGroup(group.id)}}>
+                          {group.label}
+                       </li>);
       groupListDom.push(groupItem);
     }
     return groupListDom;
