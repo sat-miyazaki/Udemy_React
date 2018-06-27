@@ -43,8 +43,46 @@ export default class App extends React.Component {
                     }
                   ]
       },
+      todoCount: 4,
       selectedGroup: "group-1"
     }
+  }
+
+  onAddTodo(label) {
+    let _state = Object.assign({}, this.state);
+    _state.todoCount++;
+    let todoList = _state.todoList[_state.selectedGroup];
+    let todoItem = {
+      id: "item-" + _state.todoCount,
+      label: label,
+      completed: false
+    }
+    todoList.push(todoItem);
+    this.setState(_state);
+  }
+
+  onCompleteTodo(id) {
+    let _state = Object.assign({}, this.state);
+    let todoList = _state.todoList[_state.selectedGroup];
+    for (var i = 0; i < todoList.length; i++) {
+      if (todoList[i].id == id) {
+        todoList[i].completed = true;
+        break;
+      }
+    }
+    this.setState(_state);
+  }
+
+  onDeleteTodo(id) {
+    let _state = Object.assign({}, this.state);
+    let todoList = _state.todoList[_state.selectedGroup];
+    for (var i = 0; i < todoList.length; i++) {
+      if (todoList[i].id == id) {
+        todoList.splice(i, 1);
+        break;
+      }
+    }
+    this.setState(_state);
   }
 
   onSelectGroup(id) {
@@ -59,7 +97,10 @@ export default class App extends React.Component {
           groupList={this.state.groupList}
           onSelect={this.onSelectGroup.bind(this)}/>
         <MainArea
-          todoList={this.state.todoList[this.state.selectedGroup]}/>
+          todoList={this.state.todoList[this.state.selectedGroup]}
+          onAddTodo={this.onAddTodo.bind(this)}
+          onCompleteTodo={this.onCompleteTodo.bind(this)}
+          onDeleteTodo={this.onDeleteTodo.bind(this)}/>
       </div>
     )
   }
