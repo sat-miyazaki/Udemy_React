@@ -20359,7 +20359,8 @@ var App = function (_React$Component) {
         }]
       },
       todoCount: 4,
-      selectedGroup: "group-1"
+      groupCount: 1,
+      selectedGroup: "inbox"
     };
     return _this;
   }
@@ -20411,6 +20412,21 @@ var App = function (_React$Component) {
       this.setState({ selectedGroup: id });
     }
   }, {
+    key: 'onAddGroup',
+    value: function onAddGroup(groupName) {
+      var _state = Object.assign({}, this.state);
+      _state.groupCount++;
+      var groupId = "group-" + _state.groupCount;
+      var groupItem = {
+        id: groupId,
+        label: groupName
+      };
+      _state.groupList.push(groupItem);
+
+      _state.todoList[groupId] = [];
+      this.setState(_state);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -20418,7 +20434,8 @@ var App = function (_React$Component) {
         { className: 'wrap' },
         _react2.default.createElement(_sideArea2.default, {
           groupList: this.state.groupList,
-          onSelect: this.onSelectGroup.bind(this) }),
+          onSelect: this.onSelectGroup.bind(this),
+          onAddGroup: this.onAddGroup.bind(this) }),
         _react2.default.createElement(_mainArea2.default, {
           todoList: this.state.todoList[this.state.selectedGroup],
           onAddTodo: this.onAddTodo.bind(this),
@@ -20472,7 +20489,12 @@ var SideArea = function (_React$Component) {
   function SideArea(props) {
     _classCallCheck(this, SideArea);
 
-    return _possibleConstructorReturn(this, (SideArea.__proto__ || Object.getPrototypeOf(SideArea)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SideArea.__proto__ || Object.getPrototypeOf(SideArea)).call(this, props));
+
+    _this.state = {
+      showAddGroupDialog: false
+    };
+    return _this;
   }
 
   _createClass(SideArea, [{
@@ -20481,6 +20503,22 @@ var SideArea = function (_React$Component) {
       var listItem = _reactDom2.default.findDOMNode(event.target);
       var id = listItem.dataset.id;
       this.props.onSelect(id);
+    }
+  }, {
+    key: 'onClickAddGroup',
+    value: function onClickAddGroup(event) {
+      this.setState({ showAddGroupDialog: true });
+    }
+  }, {
+    key: 'onSaveAddGroupDialog',
+    value: function onSaveAddGroupDialog(groupName) {
+      this.props.onAddGroup(groupName);
+      this.setState({ showAddGroupDialog: false });
+    }
+  }, {
+    key: 'onCancelAddGroupDialog',
+    value: function onCancelAddGroupDialog() {
+      this.setState({ showAddGroupDialog: false });
     }
   }, {
     key: 'renderGroup',
@@ -20510,7 +20548,21 @@ var SideArea = function (_React$Component) {
           { className: 'group-list' },
           this.renderGroup()
         ),
-        _react2.default.createElement(_addGroupDialog2.default, null)
+        _react2.default.createElement(
+          'div',
+          { className: 'side-area-footer' },
+          _react2.default.createElement(
+            'button',
+            {
+              className: 'add-group-button',
+              onClick: this.onClickAddGroup.bind(this) },
+            '\u30B0\u30EB\u30FC\u30D7\u65B0\u898F\u4F5C\u6210'
+          )
+        ),
+        _react2.default.createElement(_addGroupDialog2.default, {
+          show: this.state.showAddGroupDialog,
+          onSave: this.onSaveAddGroupDialog.bind(this),
+          onCancel: this.onCancelAddGroupDialog.bind(this) })
       );
     }
   }]);
@@ -20555,46 +20607,64 @@ var AddGroupDialog = function (_React$Component) {
   }
 
   _createClass(AddGroupDialog, [{
+    key: "onCancel",
+    value: function onCancel(event) {
+      this.props.onCancel();
+    }
+  }, {
+    key: "onSave",
+    value: function onSave(event) {
+      var groupNameInput = this.refs.groupName;
+      this.props.onSave(groupNameInput.value);
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        "div",
-        { className: "modal-layer" },
-        _react2.default.createElement(
+      if (this.props.show) {
+        return _react2.default.createElement(
           "div",
-          { className: "dialog" },
+          { className: "modal-layer" },
           _react2.default.createElement(
             "div",
-            { className: "dialog-header" },
-            "\u30B0\u30EB\u30FC\u30D7\u65B0\u898F\u4F5C\u6210"
-          ),
-          _react2.default.createElement(
-            "div",
-            { className: "dialog-content" },
-            "\u30B0\u30EB\u30FC\u30D7\u540D\uFF1A",
-            _react2.default.createElement("input", {
-              type: "text",
-              name: "groupName",
-              className: "group-text-input" })
-          ),
-          _react2.default.createElement(
-            "div",
-            { className: "dialog-footer" },
+            { className: "dialog" },
             _react2.default.createElement(
-              "button",
-              {
-                className: "cancel-button" },
-              "\u30AD\u30E3\u30F3\u30BB\u30EB"
+              "div",
+              { className: "dialog-header" },
+              "\u30B0\u30EB\u30FC\u30D7\u65B0\u898F\u4F5C\u6210"
             ),
             _react2.default.createElement(
-              "button",
-              {
-                className: "save-button" },
-              "\u4FDD\u5B58"
+              "div",
+              { className: "dialog-content" },
+              "\u30B0\u30EB\u30FC\u30D7\u540D\uFF1A",
+              _react2.default.createElement("input", {
+                ref: "groupName",
+                type: "text",
+                name: "groupName",
+                className: "group-text-input" })
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "dialog-footer" },
+              _react2.default.createElement(
+                "button",
+                {
+                  className: "cancel-button",
+                  onClick: this.onCancel.bind(this) },
+                "\u30AD\u30E3\u30F3\u30BB\u30EB"
+              ),
+              _react2.default.createElement(
+                "button",
+                {
+                  className: "save-button",
+                  onClick: this.onSave.bind(this) },
+                "\u4FDD\u5B58"
+              )
             )
           )
-        )
-      );
+        );
+      } else {
+        return _react2.default.createElement("div", null);
+      }
     }
   }]);
 
