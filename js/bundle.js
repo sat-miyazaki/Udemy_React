@@ -20310,7 +20310,7 @@ var _sideArea = __webpack_require__(27);
 
 var _sideArea2 = _interopRequireDefault(_sideArea);
 
-var _mainArea = __webpack_require__(28);
+var _mainArea = __webpack_require__(29);
 
 var _mainArea2 = _interopRequireDefault(_mainArea);
 
@@ -20454,6 +20454,10 @@ var _reactDom = __webpack_require__(8);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _addGroupDialog = __webpack_require__(28);
+
+var _addGroupDialog2 = _interopRequireDefault(_addGroupDialog);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20505,7 +20509,8 @@ var SideArea = function (_React$Component) {
           'ul',
           { className: 'group-list' },
           this.renderGroup()
-        )
+        ),
+        _react2.default.createElement(_addGroupDialog2.default, null)
       );
     }
   }]);
@@ -20532,15 +20537,98 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _header = __webpack_require__(29);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddGroupDialog = function (_React$Component) {
+  _inherits(AddGroupDialog, _React$Component);
+
+  function AddGroupDialog() {
+    _classCallCheck(this, AddGroupDialog);
+
+    return _possibleConstructorReturn(this, (AddGroupDialog.__proto__ || Object.getPrototypeOf(AddGroupDialog)).apply(this, arguments));
+  }
+
+  _createClass(AddGroupDialog, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "modal-layer" },
+        _react2.default.createElement(
+          "div",
+          { className: "dialog" },
+          _react2.default.createElement(
+            "div",
+            { className: "dialog-header" },
+            "\u30B0\u30EB\u30FC\u30D7\u65B0\u898F\u4F5C\u6210"
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "dialog-content" },
+            "\u30B0\u30EB\u30FC\u30D7\u540D\uFF1A",
+            _react2.default.createElement("input", {
+              type: "text",
+              name: "groupName",
+              className: "group-text-input" })
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "dialog-footer" },
+            _react2.default.createElement(
+              "button",
+              {
+                className: "cancel-button" },
+              "\u30AD\u30E3\u30F3\u30BB\u30EB"
+            ),
+            _react2.default.createElement(
+              "button",
+              {
+                className: "save-button" },
+              "\u4FDD\u5B58"
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddGroupDialog;
+}(_react2.default.Component);
+
+exports.default = AddGroupDialog;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _header = __webpack_require__(30);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _footer = __webpack_require__(30);
+var _footer = __webpack_require__(31);
 
 var _footer2 = _interopRequireDefault(_footer);
 
-var _listItem = __webpack_require__(31);
+var _listItem = __webpack_require__(32);
 
 var _listItem2 = _interopRequireDefault(_listItem);
 
@@ -20646,7 +20734,7 @@ var MainArea = function (_React$Component) {
 exports.default = MainArea;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20696,7 +20784,7 @@ var Header = function (_React$Component) {
 exports.default = Header;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20746,7 +20834,7 @@ var Footer = function (_React$Component) {
 exports.default = Footer;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
