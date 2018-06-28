@@ -25,9 +25,22 @@ li {
   background: #e2e2e2;
   position: relative; }
   .side-area .group-list li {
-    padding: 10px 20px;
     border-bottom: 1px solid #CCCCCC;
-    cursor: pointer; }
+    cursor: pointer;
+    overflow: hidden; }
+    .side-area .group-list li .group-edit-button {
+      border: 1px solid #CCCCCC;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      float: right;
+      height: 25px;
+      width: 40px;
+      margin: 10px 10px 0 0; }
+    .side-area .group-list li span {
+      display: block;
+      padding: 10px 20px;
+      width: 210px;
+      float: left; }
   .side-area .side-area-footer {
     position: absolute;
     bottom: 0;
@@ -156,3 +169,13 @@ li {
         cursor: pointer;
         font-size: 0.8rem;
         color: #FFFFFF; }
+      .modal-layer .dialog .dialog-footer .delete-button {
+        float: right;
+        width: 80px;
+        height: 30px;
+        border-radius: 5px;
+        border: 0;
+        background: #EEEEEE;
+        cursor: pointer;
+        font-size: 0.8rem;
+        margin-right: 10px; }

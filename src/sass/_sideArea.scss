@@ -6,9 +6,26 @@
 
   .group-list {
     li {
-      padding: 10px 20px;
       border-bottom: 1px solid #CCCCCC;
       cursor: pointer;
+      overflow: hidden;
+
+      .group-edit-button {
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        float: right;
+        height: 25px;
+        width: 40px;
+        margin: 10px 10px 0 0;
+      }
+
+      span {
+        display: block;
+        padding: 10px 20px;
+        width: 210px;
+        float: left;
+      }
     }
   }
 
