@@ -8,7 +8,7 @@ module.exports = {
   },
   module: {
     /* loaderの設定 */
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/, // 対象となるファイルの拡張子（正規表現可）
         exclude: /node_modules/, // 除外するファイル/ディレクトリ（正規表現可）
