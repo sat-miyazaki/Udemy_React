@@ -1133,7 +1133,7 @@ var reducer = function reducer() {
   }
 };
 
-var store = (0, _redux.createStore)(reducer);
+var store = (0, _redux.createStore)(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 var onChange = function onChange(text) {
   var action = {
