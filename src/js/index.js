@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
 import App from './components/app';
-import MainArea from './components/mainArea';
+import configureStore from './store/';
 
 const reducer = (state = {text: "text"}, action) => {
-  console.log(action);
   switch (action.type) {
     case "CHANGE_TEXT":
       return Object.assign({}, state, {text: action.text});
@@ -15,13 +12,7 @@ const reducer = (state = {text: "text"}, action) => {
   }
 }
 
-const logger = createLogger();
-
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(logger)
-);
+const store = configureStore();
 
 const onChange = (text) => {
   const action = {
@@ -36,9 +27,7 @@ const render = () => {
   const state = store.getState();
 
   ReactDOM.render(
-    <MainArea
-      text={state.text}
-      onChange={onChange}/>,
+    <App />,
     document.getElementById('root')
   );
 }
