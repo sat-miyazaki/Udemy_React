@@ -3,15 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 import configureStore from './store/';
 
-const reducer = (state = {text: "text"}, action) => {
-  switch (action.type) {
-    case "CHANGE_TEXT":
-      return Object.assign({}, state, {text: action.text});
-    default:
-      return state;
-  }
-}
-
 const store = configureStore();
 
 const onChange = (text) => {
