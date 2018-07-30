@@ -20,6 +20,11 @@ const initialState = {
                   id:"item-2",
                   label:"Todo2",
                   completed: false
+                },
+                {
+                  id:"item-5",
+                  label:"Todo5",
+                  completed: false
                 }
               ],
     "group-1": [
