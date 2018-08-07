@@ -86,6 +86,29 @@ const reducer = (state = initialState, action) => {
       _state.groupList.push(groupItem);
       _state.todoList[groupId] = [];
       return _state;
+    case groupActionNames.SELECT_GROUP:
+      _state.selectedGroup = action.payload.id;
+      return _state;
+    case groupActionNames.EDIT_GROUP:
+      for (var i = 0; i < _state.groupList.length; i++) {
+        if (_state.groupList[i].id == action.payload.id) {
+          _state.groupList[i].label = action.payload.groupName;
+          break;
+        }
+      }
+      return _state;
+    case groupActionNames.DELETE_GROUP:
+      for (var i = 0; i < _state.groupList.length; i++) {
+        if (_state.groupList[i].id == action.payload.id) {
+          _state.groupList.splice(i, 1);
+          break;
+        }
+      }
+      delete _state.todoList[action.payload.id];
+      if (_state.selectedGroup == action.payload.id) {
+        _state.selectedGroup = _state.groupList[0].id;
+      }
+      return _state;
     default:
       return state;
   }

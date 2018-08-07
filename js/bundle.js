@@ -2146,7 +2146,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var groupActionNames = exports.groupActionNames = {
-  ADD_GROUP: 'ADD_GROUP'
+  ADD_GROUP: 'ADD_GROUP',
+  SELECT_GROUP: 'SELECT_GROUP',
+  EDIT_GROUP: 'EDIT_GROUP',
+  DELETE_GROUP: 'DELETE_GROUP'
 };
 
 var groupActions = exports.groupActions = {
@@ -2155,6 +2158,31 @@ var groupActions = exports.groupActions = {
       type: groupActionNames.ADD_GROUP,
       payload: {
         data: data
+      }
+    };
+  },
+  selectGroup: function selectGroup(id) {
+    return {
+      type: groupActionNames.SELECT_GROUP,
+      payload: {
+        id: id
+      }
+    };
+  },
+  editGroup: function editGroup(id, groupName) {
+    return {
+      type: groupActionNames.EDIT_GROUP,
+      payload: {
+        id: id,
+        groupName: groupName
+      }
+    };
+  },
+  deleteGroup: function deleteGroup(id) {
+    return {
+      type: groupActionNames.DELETE_GROUP,
+      payload: {
+        id: id
       }
     };
   }
@@ -23366,146 +23394,16 @@ var App = function (_React$Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = {
-      groupList: [{
-        id: "inbox",
-        label: "受信箱"
-      }, {
-        id: "group-1",
-        label: "グループ1"
-      }],
-      todoList: {
-        "inbox": [{
-          id: "item-1",
-          label: "Todo1",
-          completed: false
-        }, {
-          id: "item-2",
-          label: "Todo2",
-          completed: false
-        }],
-        "group-1": [{
-          id: "item-3",
-          label: "Todo3",
-          completed: false
-        }, {
-          id: "item-4",
-          label: "Todo4",
-          completed: false
-        }]
-      },
-      todoCount: 4,
-      groupCount: 1,
-      selectedGroup: "inbox"
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
   }
 
   _createClass(App, [{
-    key: 'onAddTodo',
-    value: function onAddTodo(label) {
-      var _state = Object.assign({}, this.state);
-      _state.todoCount++;
-      var todoList = _state.todoList[_state.selectedGroup];
-      var todoItem = {
-        id: "item-" + _state.todoCount,
-        label: label,
-        completed: false
-      };
-      todoList.push(todoItem);
-      this.setState(_state);
-    }
-  }, {
-    key: 'onCompleteTodo',
-    value: function onCompleteTodo(id) {
-      var _state = Object.assign({}, this.state);
-      var todoList = _state.todoList[_state.selectedGroup];
-      for (var i = 0; i < todoList.length; i++) {
-        if (todoList[i].id == id) {
-          todoList[i].completed = true;
-          break;
-        }
-      }
-      this.setState(_state);
-    }
-  }, {
-    key: 'onDeleteTodo',
-    value: function onDeleteTodo(id) {
-      var _state = Object.assign({}, this.state);
-      var todoList = _state.todoList[_state.selectedGroup];
-      for (var i = 0; i < todoList.length; i++) {
-        if (todoList[i].id == id) {
-          todoList.splice(i, 1);
-          break;
-        }
-      }
-      this.setState(_state);
-    }
-  }, {
-    key: 'onSelectGroup',
-    value: function onSelectGroup(id) {
-      this.setState({ selectedGroup: id });
-    }
-  }, {
-    key: 'onAddGroup',
-    value: function onAddGroup(groupName) {
-      var _state = Object.assign({}, this.state);
-      _state.groupCount++;
-      var groupId = "group-" + _state.groupCount;
-      var groupItem = {
-        id: groupId,
-        label: groupName
-      };
-      _state.groupList.push(groupItem);
-
-      _state.todoList[groupId] = [];
-      this.setState(_state);
-    }
-  }, {
-    key: 'onEditGroup',
-    value: function onEditGroup(id, groupName) {
-      var _state = Object.assign({}, this.state);
-      for (var i = 0; i < this.state.groupList.length; i++) {
-        if (this.state.groupList[i].id == id) {
-          this.state.groupList[i].label = groupName;
-          break;
-        }
-      }
-      this.setState(_state);
-    }
-  }, {
-    key: 'onDeleteGroup',
-    value: function onDeleteGroup(id) {
-      var _state = Object.assign({}, this.state);
-      for (var i = 0; i < this.state.groupList.length; i++) {
-        if (this.state.groupList[i].id == id) {
-          this.state.groupList.splice(i, 1);
-          break;
-        }
-      }
-      delete this.state.todoList[id];
-      this.setState(_state);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var groupName = "";
-      for (var i = 0; i < this.state.groupList.length; i++) {
-        if (this.state.groupList[i].id == this.state.selectedGroup) {
-          groupName = this.state.groupList[i].label;
-          break;
-        }
-      }
-
       return _react2.default.createElement(
         'div',
         { className: 'wrap' },
-        _react2.default.createElement(_sideArea2.default, {
-          onSelect: this.onSelectGroup.bind(this),
-          onEditGroup: this.onEditGroup.bind(this),
-          onDeleteGroup: this.onDeleteGroup.bind(this) }),
+        _react2.default.createElement(_sideArea2.default, null),
         _react2.default.createElement(_mainArea2.default, null)
       );
     }
@@ -23547,6 +23445,15 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onAddGroup: function onAddGroup(data) {
       dispatch(_groupActions.groupActions.addGroup(data));
+    },
+    onSelect: function onSelect(id) {
+      dispatch(_groupActions.groupActions.selectGroup(id));
+    },
+    onEditGroup: function onEditGroup(id, groupName) {
+      dispatch(_groupActions.groupActions.editGroup(id, groupName));
+    },
+    onDeleteGroup: function onDeleteGroup(id) {
+      dispatch(_groupActions.groupActions.deleteGroup(id));
     }
   };
 };
@@ -24456,6 +24363,29 @@ var reducer = function reducer() {
       };
       _state.groupList.push(groupItem);
       _state.todoList[groupId] = [];
+      return _state;
+    case _groupActions.groupActionNames.SELECT_GROUP:
+      _state.selectedGroup = action.payload.id;
+      return _state;
+    case _groupActions.groupActionNames.EDIT_GROUP:
+      for (var i = 0; i < _state.groupList.length; i++) {
+        if (_state.groupList[i].id == action.payload.id) {
+          _state.groupList[i].label = action.payload.groupName;
+          break;
+        }
+      }
+      return _state;
+    case _groupActions.groupActionNames.DELETE_GROUP:
+      for (var i = 0; i < _state.groupList.length; i++) {
+        if (_state.groupList[i].id == action.payload.id) {
+          _state.groupList.splice(i, 1);
+          break;
+        }
+      }
+      delete _state.todoList[action.payload.id];
+      if (_state.selectedGroup == action.payload.id) {
+        _state.selectedGroup = _state.groupList[0].id;
+      }
       return _state;
     default:
       return state;
